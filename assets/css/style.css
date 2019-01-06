@@ -1,9 +1,35 @@
 
 
 .form-group {
-    margin: 2%;
+    margin: 3%;
 }
 
 .btn-info {
-    margin-top: 3%;
+    margin: 1%;
+}
+
+p {
+    font-size: 8pt;
+}
+
+.btn-primary {
+    margin-top: 2%;
+}
+
+h1 {
+    font-family: 'Nanum Gothic', sans-serif;
+
+}
+
+.container {
+    align-content: center;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.jumbotron {
+    padding-right: 20%;
+    padding-left: 20%;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }

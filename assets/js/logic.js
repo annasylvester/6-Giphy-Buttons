@@ -20,7 +20,7 @@ function handleSuccess() {
         console.log(gifs);
         for (var i = 0; i < gifs.length; i++) {
 
-            var showDiv = $("<div class='col-md-4'>");
+            var showDiv = $("<div class='col-12'>");
             var rating = gifs[i].rating;
             var defaultAnimatedSrc = gifs[i].images.fixed_height.url;
             var staticSrc = gifs[i].images.fixed_height_still.url;
@@ -32,8 +32,9 @@ function handleSuccess() {
             showImage.attr("data-state", "still");
             showImage.attr("data-still", staticSrc);
             showImage.attr("data-animate", defaultAnimatedSrc);
-            showDiv.append(p);
+            
             showDiv.append(showImage);
+            showDiv.append(p);
             $(".gifs").prepend(showDiv);
         }
 
@@ -69,6 +70,7 @@ function renderButtons() {
     for (let i = 0; i < interests.length; i++) {
         let b = $("<button>");
         b.addClass("interest");
+        b.addClass("btn btn-info");
         b.attr("data-name", interests[i]);
         b.text(interests[i]);
         $("#button-bar").append(b);

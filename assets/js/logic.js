@@ -1,49 +1,41 @@
 let interests = [];
 
 //////////// SEARCH GIPHY ////////////////
+function searchGiphy(value) {
+    const endpoint = 'https://api.giphy.com/v1/gifs/search?';
+    const params = 'api_key=i2UzHrAawKZQ8if08gTKifooFMPnXXCD&q=' + value + '&limit=10';
+    const url = endpoint + params;
+    $.ajax(url)
+        .then(handleSuccess)
+        .catch(handleError);
+}
 
 
 //////////// DISPLAY GIFS FUNCTION //////////////
 function handleSuccess(data) {
 
-    let search = $(this).data("search");
-	console.log(search);
     const gifs = data.data;
-    console.log(gifs);
 
-    const endpoint = 'https://api.giphy.com/v1/gifs/search?';
-    const params = 'api_key=i2UzHrAawKZQ8if08gTKifooFMPnXXCD&q=' + search + '&limit=10';
-    const queryURL = endpoint + params;
+    for (var i = 0; i < gifs.length; i++) {
 
-    console.log(queryURL);
+        var showDiv = $("<div class='col-md-4'>");
+        var rating = gifs[i].rating;
+        var defaultAnimatedSrc = gifs[i].images.fixed_height.url;
+        var staticSrc = gifs[i].images.fixed_height_still.url;
+        var showImage = $("<img>");
+        var p = $("<p>").text("Rating: " + rating);
 
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done(function (response) {
-        var results = response.data;
-        console.log(results);
+        showImage.attr("src", staticSrc);
+        showImage.addClass("netflixGiphy");
+        showImage.attr("data-state", "still");
+        showImage.attr("data-still", staticSrc);
+        showImage.attr("data-animate", defaultAnimatedSrc);
+        showDiv.append(p);
+        showDiv.append(showImage);
+        $(".gifs").prepend(showDiv);
+    }
 
-
-        for (var i = 0; i < gifs.length; i++) {
-
-            var showDiv = $("<div class='col-md-4'>");
-            var rating = gifs[i].rating;
-            var defaultAnimatedSrc = gifs[i].images.fixed_height.url;
-            var staticSrc = gifs[i].images.fixed_height_still.url;
-            var showImage = $("<img>");
-            var p = $("<p>").text("Rating: " + rating);
-
-            showImage.attr("src", staticSrc);
-            showImage.addClass("netflixGiphy");
-            showImage.attr("data-state", "still");
-            showImage.attr("data-still", staticSrc);
-            showImage.attr("data-animate", defaultAnimatedSrc);
-            showDiv.append(p);
-            showDiv.append(showImage);
-            $(".gifs").prepend(showDiv);
-        }
-    });
+    console.log('Data: ', gifs);
 }
 
 //////// WHEN ERROR HAPPENS ///////////////
@@ -60,7 +52,7 @@ $('#submitBtn').on("click", function (event) {
     const newInterest = $('input[name="search"]').val().trim();
     interests.push(newInterest);
     console.log(interests)
-
+    searchGiphy(newInterest);
 
     $('input[name="search"]').val('');
     renderButtons();
@@ -82,4 +74,4 @@ function renderButtons() {
 }
 ///////// WHEN BUTTON CLICKED ///////////////
 
-$(document).on("click", ".interest", handleSuccess);
+
